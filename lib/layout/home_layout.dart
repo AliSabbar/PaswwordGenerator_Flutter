@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
-            title: Text("Password Generator"),
+            title: Text("Passwordic"),
             actions: [
               IconButton(
                 onPressed: () {
@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
                 icon: Icon(Icons.info),
               ),
             ],
-            centerTitle: true,
+            centerTitle: false,
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.current_index,
@@ -88,18 +88,22 @@ class MyHomePage extends StatelessWidget {
                                       return "this field musn't be empty ! ";
                                   }),
                               defaultTextField(
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.phone,
                                   labelText: "Password Length",
                                   hintText: "Enter Password Length",
                                   prefixIcon: Icon(Icons.password),
                                   controller: lengthController,
                                   validator: (v) {
+                                    final passIntlength = v;
+                                    final length = int.parse(passIntlength!);
                                     if (v!.isEmpty) {
                                       return "this field musn't be empty ! ";
-                                    } else if (v == "-" ||
-                                        v == "." ||
-                                        v == ","|| v.contains(" ")) {
+                                    } else if (v.contains(
+                                        RegExp(r'^\D+|(?<=\d),(?=\d)'))) {
                                       return "Enter Number Only";
+                                    }
+                                    else if(length >= 31){
+                                      return "Length must be only 30 or less";
                                     }
                                   }),
                               defaultTextField(

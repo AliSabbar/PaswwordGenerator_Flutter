@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedHelper.init();
   bool? isDark = SharedHelper.getPreferences(key: 'isDark');
-  runApp(MyApp(isDark ?? false));
+  runApp(MyApp(isDark ?? true));
 }
 
 class MyApp extends StatelessWidget {
