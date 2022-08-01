@@ -1,4 +1,3 @@
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +28,7 @@ Widget passwordCard(model, context) {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
-        color: color==""?Colors.white:HexColor(color),
+        color: color == "" ? Colors.white : HexColor(color),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -109,36 +108,36 @@ Widget cardBuilder({
   required List<Map> list,
   required bool condition,
 }) {
-  return ConditionalBuilder(
-    condition: condition,
-    fallback: (context) => Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.password,
-            color: Colors.grey,
-            size: 100,
+  return condition
+      ? ListView.separated(
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) => passwordCard(list[index], context),
+          separatorBuilder: (context, index) => SizedBox(
+                height: 3,
+              ),
+          itemCount: list.length)
+      : Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.password,
+                color: Colors.grey,
+                size: 100,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "You Don't have any passwords yet",
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "You Don't have any passwords yet",
-            style: TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    ),
-    builder: (context) => ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) => passwordCard(list[index], context),
-        separatorBuilder: (context, index) => SizedBox(
-              height: 3,
-            ),
-        itemCount: list.length),
-  );
+        );
 }
 
 void navigateTo({
