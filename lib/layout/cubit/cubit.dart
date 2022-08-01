@@ -21,12 +21,11 @@ class HomeLayOutCubit extends Cubit<HomeLayOutStates> {
     PasswordsScreen(),
     DeletedPasswordsScreen(),
   ];
-  // DataBase 
+  // DataBase
   Database? database;
   List<Map> myPasswords = [];
   List<Map> deletedPasswords = [];
-  
-  
+
   void changeIndex(index) {
     current_index = index;
     emit(ChangeBottomIndexState());
@@ -36,14 +35,17 @@ class HomeLayOutCubit extends Cubit<HomeLayOutStates> {
     iconBottom = icon;
     isBottom = bot;
     emit(ChangeBottomSheetState());
+
   }
 
 // Password Generate
-  String generatePassword({
+  String generatePassword(
+  {
     bool letter = true,
     bool isNumber = true,
     bool isSpecial = true,
-  }) {
+  }
+  ) {
     final passwordLength = MyHomePage.lengthController.text;
     final length = int.parse(passwordLength);
     final letterLowerCase = "abcdefghijklmnopqrstuvwxyz";
@@ -60,7 +62,6 @@ class HomeLayOutCubit extends Cubit<HomeLayOutStates> {
       return chars[indexRandom];
     }).join('');
   }
-  
 
   //  Data Base
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_generator/shared/components/widget.dart';
 import 'package:password_generator/shared/cubit/cubit.dart';
+import 'package:password_generator/shared/styles/colors.dart';
 
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
@@ -94,29 +95,21 @@ class MyHomePage extends StatelessWidget {
                                   prefixIcon: Icon(Icons.password),
                                   controller: lengthController,
                                   validator: (v) {
-                                    final passIntlength = v;
-                                    final length = int.parse(passIntlength!);
                                     if (v!.isEmpty) {
-                                      return "this field musn't be empty ! ";
-                                    } else if (v.contains(
-                                        RegExp(r'^\D+|(?<=\d),(?=\d)'))) {
-                                      return "Enter Number Only";
+                                      return "no";
                                     }
-                                    else if(length >= 31){
+                                    if (v.contains(
+                                        RegExp(r'^\D+|(?<=\d),(?=\d)'))) {
+                                      return "Enter Only Numbers ! ";
+                                    }
+                                    final length = int.parse(v!);
+                                    if (length >= 31) {
                                       return "Length must be only 30 or less";
                                     }
                                   }),
-                              defaultTextField(
-                                  readOnly: true,
-                                  enableInteractiveSelection: false,
-                                  labelText: "Card Color",
-                                  hintText: "Choose Card Color",
-                                  prefixIcon: Icon(Icons.color_lens),
-                                  controller: colorController,
-                                  validator: (v) {
-                                    if (v!.isEmpty)
-                                      return "this field musn't be empty ! ";
-                                  }),
+                              SizedBox(
+                                height: 10,
+                              ),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
@@ -164,6 +157,15 @@ class MyHomePage extends StatelessWidget {
                                       backgroundColor: Colors.black,
                                       onTap: () {
                                         colorController.text = "000000";
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    chooseCardColor(
+                                      backgroundColor: Colors.red,
+                                      onTap: () {
+                                        colorController.text = "F44336";
                                       },
                                     ),
                                   ],

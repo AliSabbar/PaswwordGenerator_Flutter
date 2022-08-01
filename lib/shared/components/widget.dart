@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,13 +83,15 @@ Widget passwordCard(model, context) {
                                   message:
                                       "${model['title']} Password copied Successfully");
                             } else {
-                                      HomeLayOutCubit.get(context)
-      .updateDataFromDataBase(id: model['id'], status: 'new');
+                              HomeLayOutCubit.get(context)
+                                  .updateDataFromDataBase(
+                                      id: model['id'], status: 'new');
                             }
                           },
                           icon: Icon(
-                            HomeLayOutCubit.get(context).current_index ==
-                                0?Icons.copy:Icons.restart_alt,
+                            HomeLayOutCubit.get(context).current_index == 0
+                                ? Icons.copy
+                                : Icons.restart_alt,
                             color: Colors.white,
                           ))),
                 ],
@@ -98,6 +101,43 @@ Widget passwordCard(model, context) {
         ),
       ),
     ),
+  );
+}
+
+Widget cardBuilder({
+  required context,
+  required List<Map> list,
+  required bool condition,
+}) {
+  return ConditionalBuilder(
+    condition: condition,
+    fallback: (context) => Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.password,
+            color: Colors.grey,
+            size: 100,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "You Don't have any passwords yet",
+            style: TextStyle(
+                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    ),
+    builder: (context) => ListView.separated(
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) => passwordCard(list[index], context),
+        separatorBuilder: (context, index) => SizedBox(
+              height: 3,
+            ),
+        itemCount: list.length),
   );
 }
 
