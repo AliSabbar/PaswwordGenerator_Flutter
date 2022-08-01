@@ -29,7 +29,7 @@ Widget passwordCard(model, context) {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
-        color: HexColor(color),
+        color: color==""?Colors.white:HexColor(color),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),

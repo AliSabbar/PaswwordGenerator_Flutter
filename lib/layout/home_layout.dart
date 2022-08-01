@@ -96,13 +96,13 @@ class MyHomePage extends StatelessWidget {
                                   controller: lengthController,
                                   validator: (v) {
                                     if (v!.isEmpty) {
-                                      return "no";
+                                      return "this field musn't be empty ! ";
                                     }
                                     if (v.contains(
                                         RegExp(r'^\D+|(?<=\d),(?=\d)'))) {
                                       return "Enter Only Numbers ! ";
                                     }
-                                    final length = int.parse(v!);
+                                    final length = int.parse(v);
                                     if (length >= 31) {
                                       return "Length must be only 30 or less";
                                     }
